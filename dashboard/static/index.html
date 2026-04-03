@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KKC Simulation Dashboard</title>
+    <!-- Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Sidebar -->
+        <aside id="sidebar">
+            <div class="logo">
+                <h1 id="main_title">KKC Simulator</h1>
+                <p>Industrial Signal Engine</p>
+            </div>
+            <nav>
+                <div class="nav-section">
+                    <h3>DATA SOURCES</h3>
+                    <select id="db_select" class="premium-select">
+                        <option value="">Loading databases...</option>
+                    </select>
+                </div>
+                <div class="nav-section">
+                    <h3>NAVIGATION</h3>
+                    <ul class="nav-links">
+                        <li class="active" data-view="overview">Dashboard Overview</li>
+                        <li data-view="runs">Simulation Runs</li>
+                        <li data-view="about">About System</li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="main_content">
+            <!-- Header -->
+            <header>
+                <div class="header-left">
+                    <h2 id="view_title">Overview</h2>
+                    <p id="current_db_display">Database: --</p>
+                </div>
+                <div class="header-right">
+                    <button id="refresh_btn" class="premium-button">Refresh Data</button>
+                </div>
+            </header>
+
+            <!-- Dashboard Overview -->
+            <section id="view_overview" class="view">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span>TOTAL RUNS</span>
+                        <h2 id="stat_total_runs">--</h2>
+                        <div class="stat-icon">📊</div>
+                    </div>
+                    <div class="stat-card">
+                        <span>TOTAL READINGS</span>
+                        <h2 id="stat_total_readings">--</h2>
+                        <div class="stat-icon">📈</div>
+                    </div>
+                    <div class="stat-card">
+                        <span>PASS RATE</span>
+                        <h2 id="stat_pass_rate">--%</h2>
+                        <div class="stat-icon">✅</div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-container glass-card">
+                        <h3>Domain Distribution</h3>
+                        <canvas id="domainChart"></canvas>
+                    </div>
+                    <div class="chart-container glass-card">
+                        <h3>Latest Activity</h3>
+                        <div id="latest_runs_list" class="mini-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Runs View -->
+            <section id="view_runs" class="view hidden">
+                <div class="table-container glass-card">
+                    <div class="table-header">
+                        <h3>Full Run History</h3>
+                        <div class="table-filters">
+                            <input type="text" id="run_search" placeholder="Search scenarios..." class="premium-input">
+                        </div>
+                    </div>
+                    <table id="runs_table">
+                        <thead>
+                            <tr>
+                                <th>Run ID</th>
+                                <th>Domain</th>
+                                <th>Scenario</th>
+                                <th>Readings</th>
+                                <th>Faults</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Run Modal -->
+            <div id="run_modal" class="modal hidden">
+                <div class="modal-content glass-card">
+                    <div class="modal-header">
+                        <h2 id="modal_run_id">Run Details</h2>
+                        <button id="close_modal" class="close-btn">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="run-meta-summary">
+                            <span id="modal_meta_domain">--</span>
+                            <span id="modal_meta_scenario">--</span>
+                        </div>
+                        <div class="chart-container full-width">
+                            <h3>Sensor Data (Sample)</h3>
+                            <canvas id="runDetailChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>
